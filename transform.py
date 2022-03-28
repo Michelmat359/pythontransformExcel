@@ -1,4 +1,5 @@
 import csv
+import pandas as pd
 
 
 
@@ -10,9 +11,11 @@ class Transformdata():
         self.num_tool = 8
         self.start_data = 21
         self.finish_data = 78
+        self.namefile = "CalidadViejo.csv"
+        self.exitnamefile = "Solution.csv"
 
     def read(self):
-        with open("CalidadViejo.csv") as file_name:
+        with open(self.namefile) as file_name:
 
             file_read = csv.reader(file_name)
             row_count = 0
@@ -23,30 +26,26 @@ class Transformdata():
                     first_data = row[0].split(";")
                     array_id = []
                     array_id.append(float(first_data[1]))  # Reference
-
                     for i in range(5, ((self.num_tool) * 6) + 5):
                         if (first_data[i] != ""):
                             array_id.append(float(first_data[i]))
-                    print(array_id)
 
                 if (row_count == 3):
                     first_data = row[0].split(";")
                     array_valuets = []
                     array_valuets.append(first_data[0])  # Ts
-
                     for i in range(5, ((self.num_tool) * 6) + 5):
                         if (first_data[i] != ""):
                             array_valuets.append(float(first_data[i]))
-                    print(array_valuets)
+
                 if (row_count == 4):
                     first_data = row[0].split(";")
                     array_valuetn = []
                     array_valuetn.append(first_data[0])  # TN
-
                     for i in range(5, ((self.num_tool) * 6) + 5):
                         if (first_data[i] != ""):
                             array_valuetn.append(float(first_data[i]))
-                    print(array_valuetn)
+
                 if (row_count == 5):
                     first_data = row[0].split(";")
                     array_valueti = []
@@ -93,14 +92,13 @@ class Transformdata():
 
             final_list.insert(0, final_array_head)
             final_list.insert(1, arraY_vacio)
-            self.write('sol3.csv', final_list)
+            data = pd.DataFrame(final_list)
+            self.write(self.exitnamefile, data)
 
 
-    def write(self, file_name, list_of_elem):
-
-        with open(file_name, 'a+', newline='') as write_obj:
+    def write(self, exitnamefile, list_of_elem):
+        with open(exitnamefile, 'a+', newline='') as write_obj:
             csv_writer = csv.writer(write_obj)
-
             csv_writer.writerows(([list_of_elem[index]] for index in range(0, len(list_of_elem))))
 
 
