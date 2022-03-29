@@ -12,7 +12,7 @@ class Transformdata():
         self.start_data = 21
         self.finish_data = 78
         self.namefile = "CalidadViejo.csv"
-        self.exitnamefile = "Solution.csv"
+        self.exitnamefile = "sol1.csv"
 
     def read(self):
         with open(self.namefile) as file_name:
@@ -93,13 +93,21 @@ class Transformdata():
             final_list.insert(0, final_array_head)
             final_list.insert(1, arraY_vacio)
             data = pd.DataFrame(final_list)
-            self.write(self.exitnamefile, data)
+            data.to_csv(self.exitnamefile, sep='\t', index=False)
+            print(data)
+            # self.write(data)
 
 
-    def write(self, exitnamefile, list_of_elem):
-        with open(exitnamefile, 'a+', newline='') as write_obj:
-            csv_writer = csv.writer(write_obj)
-            csv_writer.writerows(([list_of_elem[index]] for index in range(0, len(list_of_elem))))
+    # def write(self, list_of_elem):
+    #     print(self.exitnamefile)
+    #     print(list_of_elem)
+    #     with open(self.exitnamefile, 'a+', newline='') as write_obj:
+    #         csv_writer = csv.writer(write_obj)
+    #         aux = 0
+    #         for row in list_of_elem:
+    #             csv_writer.writerows(row)
+    #
+    #             # csv_writer.writerows(([list_of_elem[index]] for index in range(0, len(list_of_elem))))
 
 
 Object = Transformdata()
